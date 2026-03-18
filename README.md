@@ -24,13 +24,21 @@ A full-stack BookStore web application built using the MERN stack with user auth
 📸 Screenshots
 
 🏠 Home Page
+
 ![Home](./screenshots/home.png)
+
 🔐 Login Page
+
 ![Login](./screenshots/login.png)
+
 📝 Signup Page
+
 ![Signup](./screenshots/signup.png)
+
 📚 Course Page
+
 ![course](./screenshots/courses.png)
+
 ---
 
 ## ⚙️ Setup
