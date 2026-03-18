@@ -5,7 +5,7 @@ const Cards = ({item}) => {
    
     return (
         <>
-            <div>
+            <div className='w-full'>
                 <div className="card bg-base-100 dark:bg-base-100 dark:border w-full shadow-sm hover:scale-102 duration-200 min-h-105">
                     <figure>
                         <img

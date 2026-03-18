@@ -1,13 +1,16 @@
 import React from 'react'
 import banner from "../../public/banner.jpg"
+import { useAuth } from '../context/AuthProvider'
 const Banner = () => {
+  const[authUser,setAuthUser]=useAuth();
+
   return (
     <>
-      <div className='max-w-screen-2xl container mx-auto md:px-20 px-4 flex flex-col md:flex-row my-15'>
+      <div className='max-h-screen max-w-screen-2xl container mx-auto md:px-20 px-4 flex flex-col md:flex-row my-20'>
 
-        <div className='w-full md:w-1/2 m-3 md:my-32 order-2 md:order-1'>
+        <div className='h-full w-full md:w-1/2 m-3 md:my-32 order-2 md:order-1'>
           <div className='flex flex-col gap-5 p-2'>
-            <h1 className='text-4xl font-bold'>Hello, welcomes here to learn something <span className='text-pink-500'>new everyday!!!</span></h1>
+            <h1 className='text-4xl font-bold'>Hello,{authUser && <span className='text-pink-500'> {authUser.fullname}</span> } welcome here to learn something <span className='text-pink-500'>new everyday!!!</span></h1>
             <p className='text-xl'>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores placeat architecto tempora voluptatibus expedita quod! Neque tenetur dolorem repudiandae rerum culpa architecto unde cumque? Sunt.
             </p>
@@ -27,7 +30,7 @@ const Banner = () => {
               <input type="email" placeholder="mail@site.com" required />
             </label>
             <div className="validator-hint hidden">Enter valid email address</div>
-           <button className='bg-pink-500 text-white px-2 py-2  w-30 rounded-lg cursor-pointer'>Secondary</button>
+           <button className='bg-pink-500 text-white px-2 py-2  w-30 rounded-lg cursor-pointer'>Get started</button>
           </div>
       </div>
           <div className='w-full md:w-1/2 flex justify-center items-center order-1 md:order-2'>

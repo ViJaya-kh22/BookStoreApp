@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Login from './Login';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthProvider';
+import Logout from './Logout';
 
 const Navbar = () => {
+    const [authUser,setAuthUser]=useAuth();
+       console.log(authUser);
+   
     const[sticky,setSticky]=useState(false);
-
     const[theme,setTheme]=useState(
         localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
     );
@@ -32,16 +36,16 @@ const Navbar = () => {
     const navItems = (
         <>
             <li>
-                <a href='/'>Home</a>
+                <Link to='/'>Home</Link>
             </li>
             <li>
-                <a href='/course'>Course</a>
+                <Link to='/course'>Course</Link>
             </li>
             <li>
-                <a href='/contact'>Contact</a>
+                <Link to='/contact'>Contact</Link>
             </li>
             <li>
-                <a href='/about'>About Us</a>
+                <Link to='/about'>About Us</Link>
             </li>
         </>
     )
@@ -63,7 +67,7 @@ const Navbar = () => {
                                 {navItems}
                             </ul>
                         </div>
-                        <a className="text-2xl font-bold cursor-pointer" href='/'>BookStore</a>
+                        <Link className="text-2xl font-bold cursor-pointer" to='/'>BookStore</Link>
                     </div>
                     <div className='navbar-end flex gap-3'>
                         <div className="navbar-center hidden lg:flex">
@@ -115,13 +119,18 @@ const Navbar = () => {
                                 </svg>
                             </label>
                         </div>
-                        <div>
+
+                       {
+                        authUser ? <Logout/>
+                        :
+                         <div>
                           <Link to="/login">
-                            <a className="btn bg-black text-white "
-                            >Login</a>
-                          </Link>
-                            
+                            <button className="btn bg-black text-white "
+                            >Login</button>
+                          </Link> 
                         </div>
+                       }
+
                     </div>
                 </div>
 

@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import toast from 'react-hot-toast'
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const [authUser,setAuthUser]= useAuth();
 
   const {
     register,
@@ -10,9 +16,27 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const onSubmit = async (data) => {
+  try {
+    const res = await axios.post("http://localhost:4001/user/signup", {
+      fullname: data.fullname,
+      email: data.email,
+      password: data.password,
+    });
+
+    toast.success("Signup successfully");
+
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+
+    setAuthUser(res.data.user);
+
+    navigate("/");
+  } catch (error) {
+    if (error.response) {
+      toast.error("Error: " + error.response.data.message);
+    }
+  }
+};
 
   return (
     <div className="flex min-h-screen justify-center items-center">
@@ -43,11 +67,11 @@ const SignUp = () => {
               type="text"
               placeholder="Enter your full name"
               className="w-full py-1 pl-2 border rounded-sm"
-              {...register("name", { required: "Required" })}
+              {...register("fullname", { required: "Required" })}
             />
-            {errors.name && (
+            {errors.fullname && (
               <span className="text-sm text-red-500">
-                {errors.name.message}
+                {errors.fullname.message}
               </span>
             )}
           </div>
@@ -99,7 +123,7 @@ const SignUp = () => {
           {/* Button */}
           <button
             type="submit"
-            className="bg-pink-500 text-white py-2 rounded-sm mt-2 hover:bg-pink-600 transition"
+            className="bg-pink-500 text-white py-2 rounded-sm mt-2 hover:bg-pink-600 transition cursor-pointer"
           >
             Sign Up
           </button>

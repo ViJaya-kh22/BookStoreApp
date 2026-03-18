@@ -1,10 +1,28 @@
 import React from 'react'
-import list from '../../public/list.json'
 import Cards from './Cards';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+
 const Course = () => {
 
-    const paidBooks = list.filter(item => item.category !== "Free");
+  const[book,setBook]=useState([]);
+
+  useEffect(()=>{
+    const getBooks = async() =>{
+      try {
+       const response = await axios.get("http://localhost:4001/book");
+       console.log(response.data);
+       setBook(response.data);
+      } catch (error) {
+        console.log("Error in course api",error);
+      }
+    }
+    getBooks();
+  },[])
+
+    const paidBooks = book.filter(item => item.category !== "Free");
     console.log(paidBooks)
   return (
     <>

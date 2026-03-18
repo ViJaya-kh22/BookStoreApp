@@ -1,8 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import {useNavigate} from 'react-router-dom';
+import { useAuth } from '../context/AuthProvider';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [authUser, setAuthUser] = useAuth();
 
   const {
     register,
@@ -10,7 +16,26 @@ const Login = () => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = async (data) => {
+  try {
+    const res = await axios.post("http://localhost:4001/user/login", {
+      email: data.email,
+      password: data.password,
+    });
+
+    toast.success("Logged in successfully");
+
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+
+    setAuthUser(res.data.user);
+
+    navigate("/");
+  } catch (error) {
+    if (error.response) {
+      toast.error("Error: " + error.response.data.message);
+    }
+  }
+};
 
   return (
     <div className="flex min-h-screen justify-center items-center">
@@ -48,7 +73,7 @@ const Login = () => {
           />
           {errors.password && <span className="text-red-500 text-sm">Required</span>}
 
-          <button className="bg-pink-500 text-white py-2 rounded-sm mt-2">
+          <button className="bg-pink-500 text-white py-2 rounded-sm mt-2 cursor-pointer">
             Login
           </button>
 
