@@ -1,6 +1,6 @@
 # 📚 BookStore App (MERN)
 
-A full-stack BookStore web application built using the MERN stack with user authentication, protected routes, and a responsive UI.
+Initial full-stack project focusing on authentication and routing.
 
 ---
 
